@@ -23,6 +23,23 @@ example(of: "Publisher") {
     center.removeObserver(observer)
 }
 
+example(of: "Subscriber") {
+    let myNotification = Notification.Name("MyNotification")
+
+    let publisher = NotificationCenter.default
+        .publisher(for: myNotification)
+
+    let center = NotificationCenter.default
+
+    let subscription = publisher
+        .sink { notification in
+            print("Notification received from a publisher: \(notification)")
+        }
+
+    center.post(name: myNotification, object: nil)
+
+    subscription.cancel()
+}
 
 
 //: [Next](@next)
