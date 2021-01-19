@@ -60,4 +60,19 @@ example(of: "Just") {
         })
 }
 
+
+example(of: "assign(to:on:") {
+    class SomeObject {
+        var value = "" {
+            didSet { print(value) }
+        }
+    }
+
+    let object = SomeObject()
+
+    let publisher = ["Hello", "World"].publisher
+    
+    _ = publisher
+        .assign(to: \.value, on: object)
+}
 //: [Next](@next)
