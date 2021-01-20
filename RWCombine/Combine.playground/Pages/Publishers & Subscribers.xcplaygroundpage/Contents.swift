@@ -152,4 +152,31 @@ example(of: "Hello Subject") {
     subject.send("How about another one?")
 }
 
+example(of: "CurrentValueSubject") {
+    var subscriptions = Set<AnyCancellable>()
+
+    let subject = CurrentValueSubject<Int, Never>(0)
+
+    subject
+        .print()
+        .sink(receiveValue: { print($0) })
+        .store(in: &subscriptions)
+
+    subject.send(1)
+    subject.send(2)
+
+    print("Printed", subject.value)
+
+    subject.send(3)
+    print("Printed", subject.value)
+
+    subject
+        .print()
+        .sink(receiveValue: { print("Second subscription", $0) })
+        .store(in: &subscriptions)
+
+//    subject.value = .finished
+    subject.send(completion: .finished)
+}
+
 //: [Next](@next)
