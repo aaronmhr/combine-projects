@@ -71,8 +71,35 @@ example(of: "assign(to:on:") {
     let object = SomeObject()
 
     let publisher = ["Hello", "World"].publisher
-    
+
     _ = publisher
         .assign(to: \.value, on: object)
 }
+
+example(of: "Custom Subscriber") {
+    let publisher = (1...6).publisher
+
+    final class IntSubscriber: Subscriber {
+        typealias Input = Int
+        typealias Failure = Never
+
+        func receive(subscription: Subscription) {
+            subscription.request(.max(3))
+        }
+
+        func receive(_ input: Int) -> Subscribers.Demand {
+            print("Received value", input)
+            return .none
+        }
+
+        func receive(completion: Subscribers.Completion<Never>) {
+            print("Received completion", completion)
+        }
+    }
+
+    let subscriber = IntSubscriber()
+
+    publisher.subscribe(subscriber)
+}
+
 //: [Next](@next)
