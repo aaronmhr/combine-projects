@@ -231,3 +231,31 @@ example(of: "combineLatest") {
 
 }
 
+example(of: "zip") {
+    let publisher1 = PassthroughSubject<Int,Never>()
+    let publisher2 = PassthroughSubject<String,Never>()
+
+    publisher1
+        .zip(publisher2)
+        .sink(
+            receiveCompletion: { print("Completed", $0) },
+            receiveValue: { print("🤐", $0) }
+        )
+        .store(in: &subscriptions)
+
+    publisher1.send(1)
+    publisher1.send(2)
+    publisher2.send("a")
+    publisher2.send("b")
+    publisher2.send("c")
+    publisher2.send("d")
+    publisher1.send(3)
+
+//    publisher1.send(completion: .finished) // latest value: 🤐 (3, "c")
+    publisher2.send(completion: .finished) // latest value: 🤐 (4, "d")
+    publisher1.send(4)
+    publisher2.send("e")
+
+    publisher2.send(completion: .finished)
+
+}
