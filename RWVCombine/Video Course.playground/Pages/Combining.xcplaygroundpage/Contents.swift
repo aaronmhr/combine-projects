@@ -46,7 +46,7 @@ example(of: "prepend(Sequence)") {
 
     publisher
         .prepend([3,4])
-        .prepend(Set(1...2))
+        .prepend(Set(1...2)) // some sequences have order other don't
         .prepend(stride(from: 6, through: 11, by: 2))
         .sink(receiveValue: { print($0) })
         .store(in: &subscriptions)
@@ -105,7 +105,7 @@ example(of: "append(Sequence)") {
 
     publisher
         .append([4,5])
-        .append(Set(6...7))
+        .append(Set(6...7)) // some sequences have order other don't
         .append(stride(from: 8, to: 11, by: 1))
         .sink(receiveValue: { print($0) })
         .store(in: &subscriptions)
