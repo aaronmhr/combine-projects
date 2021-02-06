@@ -204,4 +204,29 @@ example(of: "merge(with:)") {
     publisher2.send(completion: .finished)
 }
 
+example(of: "combineLatest") {
+    let publisher1 = PassthroughSubject<Int,Never>()
+    let publisher2 = PassthroughSubject<String,Never>()
 
+    publisher1
+        .combineLatest(publisher2)
+        .sink(
+            receiveCompletion: { print("Completed", $0) },
+            receiveValue: { print("🕣", $0) }
+        )
+        .store(in: &subscriptions)
+
+    publisher1.send(1)
+    publisher1.send(3)
+    publisher2.send("a")
+    publisher2.send("b")
+    publisher1.send(3)
+    publisher2.send("c")
+
+    publisher1.send(completion: .finished)
+    publisher1.send(4)
+    publisher2.send("d")
+
+    publisher2.send(completion: .finished)
+
+}
