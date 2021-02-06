@@ -95,3 +95,39 @@ example(of: "Type erasure") {
     subject.send(0)
     subject.send(completion: .finished)
 }
+
+
+example(of: "Create a Blackjack card dealer") {
+    let dealtHand = PassthroughSubject<Hand, HandError>()
+
+    func deal(_ cardCount: UInt) {
+        var deck = cards
+        var cardsRemaining = 52
+        var hand = Hand()
+
+        for _ in 0 ..< cardCount {
+            let randomIndex = Int.random(in: 0 ..< cardsRemaining)
+            hand.append(deck[randomIndex])
+            deck.remove(at: randomIndex)
+            cardsRemaining -= 1
+        }
+
+        if hand.points > 21 {
+            dealtHand.send(completion: .failure(.busted))
+        } else {
+            dealtHand.send(hand)
+        }
+    }
+
+    dealtHand
+        .sink {
+            if case let .failure(error) = $0 {
+                print(error)
+            }
+        } receiveValue: { hand in
+            print(hand.cardString, "for", hand.points, "points")
+        }
+        .store(in: &subscriptions)
+
+    deal(3)
+}
