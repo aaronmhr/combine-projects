@@ -10,3 +10,13 @@ example(of: "collect") {
               receiveValue: { print("🔡", $0) })
         .store(in: &subscriptions)
 }
+
+example(of: "map") {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .spellOut
+
+    [123, 4, 56].publisher
+        .map { formatter.string(from: NSNumber(value: $0)) ?? "❌"}
+        .sink(receiveValue: { print("🔢", $0) })
+        .store(in: &subscriptions)
+}
