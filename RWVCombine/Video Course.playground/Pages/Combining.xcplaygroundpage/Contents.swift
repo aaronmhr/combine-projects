@@ -40,3 +40,14 @@ example(of: "prepend(output) - in depth") {
 
     p0.send(2) // only then it can begin to emit p0 values
 }
+
+example(of: "prepend(Sequence)") {
+    let publisher = [5,6,7].publisher
+
+    publisher
+        .prepend([3,4])
+        .prepend(Set(1...2))
+        .prepend(stride(from: 6, through: 11, by: 2))
+        .sink(receiveValue: { print($0) })
+        .store(in: &subscriptions)
+}
