@@ -53,7 +53,7 @@ example(of: "PassthroughSubject") {
     let subject = PassthroughSubject<String, Never>()
 
     subject
-        .sink(receiveValue: {print($0) })
+        .sink(receiveValue: { print($0) })
         .store(in: &subscriptions)
 
     subject.send("Hello")
@@ -78,5 +78,20 @@ example(of: "CurrentValueSubject") {
 
     print("🍎", subject.value)
 
+    subject.send(completion: .finished)
+}
+
+example(of: "Type erasure") {
+    let subject = PassthroughSubject<Int, Never>()
+
+    let publisher = subject.eraseToAnyPublisher()
+
+    publisher
+        .sink(receiveValue: { print("🧼", $0) })
+        .store(in: &subscriptions)
+
+//    publisher.send(0)
+
+    subject.send(0)
     subject.send(completion: .finished)
 }
