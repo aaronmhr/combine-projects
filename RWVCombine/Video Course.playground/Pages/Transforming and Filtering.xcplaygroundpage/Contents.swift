@@ -28,3 +28,12 @@ example(of: "replaceNil") {
         .sink(receiveValue: { print("🔡", $0) })
         .store(in: &subscriptions)
 }
+
+example(of: "replaceEmpty(with:)") {
+    let empty = Empty<Int, Never>()
+
+    empty
+        .replaceEmpty(with: 1)
+        .sink(receiveValue: { print("🔢", $0) })
+        .store(in: &subscriptions)
+}
