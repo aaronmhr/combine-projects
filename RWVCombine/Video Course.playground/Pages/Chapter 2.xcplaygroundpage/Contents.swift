@@ -19,3 +19,16 @@ example(of: "NotificationCenter") {
     center.post(name: myNotification, object: nil)
     subscription.cancel()
 }
+
+
+example(of: "Just") {
+    let just = Just("Hello World")
+        .sink(receiveCompletion: {
+            print("Reveived Completion:", $0)
+        }, receiveValue: {
+            print("Received Value", $0)
+        })
+        .store(in: &subscriptions)
+
+
+}
