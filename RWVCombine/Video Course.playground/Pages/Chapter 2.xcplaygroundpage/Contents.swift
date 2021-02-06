@@ -32,3 +32,19 @@ example(of: "Just") {
 
 
 }
+
+example(of: "assign(to:on:)") {
+    class SomeObject {
+        var value: String = "" {
+            didSet {
+                print(value)
+            }
+        }
+    }
+
+    let object = SomeObject()
+
+    ["Hello", "World"].publisher
+        .assign(to: \.value, on: object)
+        .store(in: &subscriptions)
+}
