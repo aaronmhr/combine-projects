@@ -266,3 +266,12 @@ example(of: "prefix") {
         )
         .store(in: &subscriptions)
 }
+
+example(of: "drop") {
+    let numbers = (1...10).publisher
+
+    numbers
+        .drop(while: { $0 % 5 != 0 })
+        .sink(receiveValue: { print("🔢", $0) })
+        .store(in: &subscriptions)
+}
