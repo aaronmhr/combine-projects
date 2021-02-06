@@ -195,3 +195,15 @@ example(of: "compactMap") {
         .sink(receiveValue: { print("☁️", $0) })
         .store(in: &subscriptions)
 }
+
+example(of: "ignoreOutput") {
+    let numbers = (1...1000).publisher
+
+    numbers
+        .ignoreOutput()
+        .sink(
+            receiveCompletion: { print("Completed with: ", $0) },
+            receiveValue: { print("❌", $0) }
+        )
+        .store(in: &subscriptions)
+}
