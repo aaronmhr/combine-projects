@@ -254,3 +254,15 @@ example(of: "last(where:) + Subject") {
     numbers.send(9)
     numbers.send(completion: .finished)
 }
+
+example(of: "prefix") {
+    let numbers = (0...10).publisher
+
+    numbers
+        .prefix(2)
+        .sink(
+            receiveCompletion: { print("Completed with: ", $0) },
+            receiveValue: { print("🔢", $0) }
+        )
+        .store(in: &subscriptions)
+}
