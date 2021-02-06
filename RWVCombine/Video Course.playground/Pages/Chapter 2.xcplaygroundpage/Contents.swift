@@ -62,3 +62,21 @@ example(of: "PassthroughSubject") {
 
     subject.send("Still there?")
 }
+
+example(of: "CurrentValueSubject") {
+    let subject = CurrentValueSubject<Int, Never>(0)
+
+    subject
+        .print()
+        .sink(receiveValue: { print("🍌", $0) })
+        .store(in: &subscriptions)
+
+    print("🍏", subject.value)
+
+    subject.send(1)
+    subject.send(2)
+
+    print("🍎", subject.value)
+
+    subject.send(completion: .finished)
+}
