@@ -37,3 +37,21 @@ example(of: "replaceEmpty(with:)") {
         .sink(receiveValue: { print("🔢", $0) })
         .store(in: &subscriptions)
 }
+
+
+example(of: "scan") {
+    var dailyGainLoss: Int { .random(in: -10...10) }
+
+    let august = (0..<22)
+        .map { _ in dailyGainLoss }
+
+    let august2019 = august
+        .publisher
+
+    august2019
+        .scan(50) { latest, current in
+            max(0, latest + current)
+        }
+        .sink(receiveValue: { print("💵", $0) })
+        .store(in: &subscriptions)
+}
