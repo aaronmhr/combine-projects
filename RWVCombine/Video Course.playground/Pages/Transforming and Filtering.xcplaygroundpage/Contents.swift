@@ -20,3 +20,11 @@ example(of: "map") {
         .sink(receiveValue: { print("🔢", $0) })
         .store(in: &subscriptions)
 }
+
+example(of: "replaceNil") {
+    ["a", nil, "b", "c"].publisher
+        .replaceNil(with: "-")
+        .map { $0! }
+        .sink(receiveValue: { print("🔡", $0) })
+        .store(in: &subscriptions)
+}
