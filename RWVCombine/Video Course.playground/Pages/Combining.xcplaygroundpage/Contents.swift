@@ -179,3 +179,19 @@ example(of: "switchToLatest") {
     publisher3.send(9)
 }
 
+example(of: "merge(with:)") {
+    let publisher1 = PassthroughSubject<Int,Never>()
+    let publisher2 = PassthroughSubject<Int,Never>()
+
+    publisher1
+        .merge(with: publisher2)
+        .sink(receiveValue: { print("🍡", $0) })
+        .store(in: &subscriptions)
+
+    publisher1.send(1)
+    publisher1.send(2)
+    publisher2.send(3)
+    publisher2.send(4)
+    publisher1.send(5)
+}
+
