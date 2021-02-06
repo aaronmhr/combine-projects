@@ -3,7 +3,7 @@ import Foundation
 
 var subscriptions = Set<AnyCancellable>()
 
-example(of: "prepend(output)") {
+example(of: "prepend(Output)") {
     let publisher = [3,4].publisher
 
     publisher
@@ -13,7 +13,7 @@ example(of: "prepend(output)") {
         .store(in: &subscriptions)
 }
 
-example(of: "prepend(output) - in depth") {
+example(of: "prepend(Output) - in depth") {
     let p0 = PassthroughSubject<Int, Never>()
     let p2 = PassthroughSubject<Int, Never>()
     let p3 = PassthroughSubject<Int, Never>()
@@ -62,7 +62,7 @@ example(of: "prepend(Publisher)") {
         .store(in: &subscriptions)
 }
 
-example(of: "prepend(Publisher) - passthrough") {
+example(of: "prepend(Publisher) - #2") {
     let publisher1 = [3,4].publisher
     let publisher2 = PassthroughSubject<Int, Never>()
 
@@ -76,7 +76,7 @@ example(of: "prepend(Publisher) - passthrough") {
     publisher2.send(completion: .finished)
 }
 
-example(of: "append") {
+example(of: "append(Output)") {
     let publisher = [1].publisher
 
     publisher
@@ -86,7 +86,7 @@ example(of: "append") {
         .store(in: &subscriptions)
 }
 
-example(of: "append(Publisher)") {
+example(of: "append(Output) #2") {
     let publisher = PassthroughSubject<Int, Never>()
 
     publisher
