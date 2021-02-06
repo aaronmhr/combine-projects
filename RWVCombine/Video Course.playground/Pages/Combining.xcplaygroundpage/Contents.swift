@@ -185,7 +185,10 @@ example(of: "merge(with:)") {
 
     publisher1
         .merge(with: publisher2)
-        .sink(receiveValue: { print("🍡", $0) })
+        .sink(
+            receiveCompletion: { print("Completed", $0) },
+            receiveValue: { print("🍡", $0) }
+        )
         .store(in: &subscriptions)
 
     publisher1.send(1)
@@ -193,5 +196,12 @@ example(of: "merge(with:)") {
     publisher2.send(3)
     publisher2.send(4)
     publisher1.send(5)
+
+    publisher1.send(completion: .finished)
+    publisher1.send(6)
+    publisher2.send(7)
+
+    publisher2.send(completion: .finished)
 }
+
 
