@@ -166,3 +166,12 @@ example(of: "Create a phone number lookup") {
       input.send("\($0)")
     }
 }
+
+example(of: "filter") {
+    let numbers = (1...10).publisher
+
+    numbers
+        .filter { $0.isMultiple(of: 3) }
+        .sink(receiveValue: { print("#️⃣ \($0) is a multiple of 3!")})
+        .store(in: &subscriptions)
+}
