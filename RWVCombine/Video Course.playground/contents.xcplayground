@@ -3,5 +3,6 @@
     <pages>
         <page name='Getting Started'/>
         <page name='Transforming and Filtering'/>
+        <page name='Combining'/>
     </pages>
 </playground>
