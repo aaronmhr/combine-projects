@@ -207,3 +207,16 @@ example(of: "ignoreOutput") {
         )
         .store(in: &subscriptions)
 }
+
+example(of: "first(where:)") {
+    let numbers = (1...9).publisher
+
+    numbers
+        .print()
+        .first(where: { $0 % 2 == 0} )
+        .sink(
+            receiveCompletion: { print("Completed with: ", $0) },
+            receiveValue: { print("✅", $0) }
+        )
+        .store(in: &subscriptions)
+}
