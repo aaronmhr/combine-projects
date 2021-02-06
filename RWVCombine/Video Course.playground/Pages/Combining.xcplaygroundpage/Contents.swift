@@ -217,7 +217,7 @@ example(of: "combineLatest") {
         .store(in: &subscriptions)
 
     publisher1.send(1)
-    publisher1.send(3)
+    publisher1.send(2)
     publisher2.send("a")
     publisher2.send("b")
     publisher1.send(3)
@@ -230,3 +230,4 @@ example(of: "combineLatest") {
     publisher2.send(completion: .finished)
 
 }
+
