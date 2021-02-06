@@ -120,3 +120,33 @@ example(of: "prepend(Publisher)") {
         .sink(receiveValue: { print($0) })
         .store(in: &subscriptions)
 }
+
+example(of: "Making Phone Numbers") {
+
+    let phoneNumbersPublisher = ["123-4567"].publisher
+    let areaCode = "410"
+    let phoneExtension = "901"
+
+
+    let numberPublisher = phoneNumbersPublisher
+        .prepend(areaCode)
+        .prepend("1")
+        .collect()
+        .map { $0.joined(separator: "-") }
+
+    ["EXT"].publisher
+        .append(phoneExtension)
+        .prepend(numberPublisher)
+        .collect()
+        .sink(receiveValue: { print("1️⃣", $0.joined(separator: " ") ) })
+        .store(in: &subscriptions)
+
+    phoneNumbersPublisher
+        .prepend("1-", areaCode, "-")
+        .append(" EXT ")
+        .append(phoneExtension)
+        .collect()
+        .sink(receiveValue: { print("2️⃣", $0.joined()) })
+        .store(in: &subscriptions)
+
+}
