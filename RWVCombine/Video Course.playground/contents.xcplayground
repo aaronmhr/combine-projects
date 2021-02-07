@@ -6,5 +6,6 @@
         <page name='Combining'/>
         <page name='Delay'/>
         <page name='Collect'/>
+        <page name='Debounce'/>
     </pages>
 </playground>
