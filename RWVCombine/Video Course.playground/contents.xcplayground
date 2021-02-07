@@ -7,5 +7,6 @@
         <page name='Delay'/>
         <page name='Collect'/>
         <page name='Debounce'/>
+        <page name='Throttle'/>
     </pages>
 </playground>
